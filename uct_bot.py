@@ -67,7 +67,7 @@ def UCT(rootstate, verbose = False):
         # Backpropagate
         while node != None: # backpropagate from the expanded node and work back to the root node
             if (node.who == 'blue' ):
-               otherScore = state.get_score()['red']
+                otherScore = state.get_score()['red']
             else:
                 otherScore = state.get_score()['blue']
             node.Update(state.get_score()[node.who] - otherScore) # state is terminal. Update node with result from POV of node.playerJustMoved
