@@ -13,11 +13,11 @@ class Node:
         self.childNodes = []
         self.untriedMoves = state.get_moves()
         self.visits = 0
-        self.score = 0
+        self.score = 0.0
 
     def UCTSelectChild(self):
-        s = sorted(self.childNodes, key = lambda c: c.score + sqrt(2*log(self.visits)/c.visits))[-1]
-        #s = sorted(self.childNodes, key = lambda c: c.score/c.visits + sqrt(2*log(self.visits)/c.visits))[-1]
+        #s = sorted(self.childNodes, key = lambda c: c.score + sqrt(2*log(self.visits)/c.visits))[-1]
+        s = sorted(self.childNodes, key = lambda c: c.score/c.visits + sqrt(2*log(self.visits)/c.visits))[-1]
         return s
 
     def AddChild(self, m, s, j):
@@ -43,9 +43,11 @@ def UCT(rootstate, verbose = False):
     rootnode = Node(state = rootstate, who = who)
     start = time.time()
     end = 0
+    iterations = 0
     while end < 1:
         node = rootnode
         state = rootstate.copy()
+        iterations+=1
 
 		# Select
         while node.untriedMoves == [] and node.childNodes != []: # node is fully expanded and non-terminal
@@ -76,6 +78,8 @@ def UCT(rootstate, verbose = False):
             node = node.parentNode
         end = time.time() - start
 
+    print ("Number of iterations for fast: ") 
+    print (iterations)
     return sorted(rootnode.childNodes, key = lambda c: c.visits)[-1].move
 
 
