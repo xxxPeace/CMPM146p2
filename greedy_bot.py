@@ -10,7 +10,7 @@ def think(state, quip):
 	for move in moveArray:
 		stateCopy = state.copy()
 		stateCopy.apply_move(move)
-		score = stateCopy.get_score()[stateCopy.get_whos_turn()]
+		score = stateCopy.get_score()[state.get_whos_turn()]
 		if score > highScore:
 			highScore = score
 			bestMove = move
